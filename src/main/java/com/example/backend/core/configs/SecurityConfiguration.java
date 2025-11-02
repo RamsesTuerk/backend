@@ -46,31 +46,31 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-    //THE LOCALHOST [*] MUST BE DELEATED ON PRODUCTION (aka in 100 Jahren)
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // Use setAllowedOriginPatterns for all origins, including those with wildcards
-        // This simplifies the configuration and avoids potential conflicts with setAllowedOrigins
+        // Development: allow localhost with any port
         configuration.setAllowedOriginPatterns(List.of(
-                "http://localhost:[*]",      // Allows all ports on http://localhost
-                "https://localhost:[*]",     // Allows all ports on https://localhost
-                "http://127.0.0.1:[*]",      // Allows all ports on http://127.0.0.1
-                "https://127.0.0.1:[*]",     // Allows all ports on https://127.0.0.1
-                "https://::1",               // IPv6 localhost, often needed
-                "https://188.245.73.104",    // Specific production IP (if used without port)
-                "https://188.245.73.104:[*]",// Specific production IP with any port
-                "https://mybubbles.online",  // Production domain (without port)
-                "https://mybubbles.online:[*]" // Production domain with any port
+                "http://localhost:*",
+                "https://localhost:*",
+                "http://127.0.0.1:*",
+                "https://127.0.0.1:*"
         ));
 
+        // Production: your server IP & domain
+        configuration.addAllowedOrigin("http://188.245.73.104");
+        configuration.addAllowedOrigin("http://188.245.73.104:8080");
+        configuration.addAllowedOrigin("https://188.245.73.104");
+        configuration.addAllowedOrigin("https://mybubbles.online");
+
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("*")); // Allows all headers from the client
-        configuration.setAllowCredentials(true); // Important if you're sending cookies or auth headers
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration); // Apply this configuration to all paths
+        source.registerCorsConfiguration("/**", configuration);
+
         return source;
     }
 }
