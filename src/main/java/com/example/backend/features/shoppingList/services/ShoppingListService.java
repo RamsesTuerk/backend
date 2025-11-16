@@ -37,7 +37,8 @@ public class ShoppingListService {
 
     public ShoppingListDto findById(int id) {
         ShoppingList shoppingList = shoppingListRepository.findById(id).orElseThrow(() -> new RuntimeException("ShoppingList not found"));
-
+        sortPositions(shoppingList);
+        shoppingListRepository.save(shoppingList);
         return new ShoppingListDto(shoppingList);
     }
 
