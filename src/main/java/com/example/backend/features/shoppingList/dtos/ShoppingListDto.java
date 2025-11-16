@@ -10,7 +10,7 @@ import java.util.List;
 public class ShoppingListDto {
     private Integer id;
     private String name;
-    private String color;
+    private int color;
     private boolean active;
     private List<PositionDto> positions;
 
