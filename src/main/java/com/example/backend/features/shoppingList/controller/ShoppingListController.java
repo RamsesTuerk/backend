@@ -19,7 +19,7 @@ public class ShoppingListController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<?> getShoppinglists(){
+    public ResponseEntity<?> getShoppingLists(){
         return ResponseEntity.ok(shoppingListService.findAll());
     }
 

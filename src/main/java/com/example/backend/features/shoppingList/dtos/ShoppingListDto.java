@@ -10,12 +10,14 @@ import java.util.List;
 public class ShoppingListDto {
     private Integer id;
     private String name;
+    private String color;
     private boolean active;
     private List<PositionDto> positions;
 
     public ShoppingListDto(ShoppingList shoppingList) {
         this.id = shoppingList.getId();
         this.name = shoppingList.getName();
+        this.color = shoppingList.getColor();
         this.active = shoppingList.isActive();
         this.positions = shoppingList.getPositions() != null
                 ? shoppingList.getPositions().stream().map(PositionDto::new).toList()

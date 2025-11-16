@@ -37,6 +37,7 @@ public class ShoppingListService {
     public void create(CreateShoppingListDto shoppingListDto) {
         ShoppingList shoppingList = new ShoppingList();
         shoppingList.setName(shoppingListDto.getName());
+        shoppingList.setColor(shoppingListDto.getColor());
         shoppingList.setActive(true);
         shoppingListRepository.save(shoppingList);
     }
