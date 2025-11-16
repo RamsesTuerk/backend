@@ -9,6 +9,6 @@ import java.util.List;
 @Setter
 public class CreateShoppingListDto {
     private String name;
-    private String color;
+    private int color;
     private List<AddPositionDto> positions;
 }
