@@ -59,4 +59,10 @@ public class ShoppingListService {
         }
         shoppingListRepository.save(shoppingList);
     }
+
+    public void invertPosition(int positionId) {
+        Position position = positionRepository.findById(positionId).orElseThrow(() -> new RuntimeException("Position not found"));
+        position.setSold(!position.isSold());
+        positionRepository.save(position);
+    }
 }

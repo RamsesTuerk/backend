@@ -40,4 +40,10 @@ public class ShoppingListController {
         return ResponseEntity.ok(shoppingListService.findById(id));
     }
 
+    @GetMapping("/invertPosition/{posId}")
+    public ResponseEntity<?> getPositions(@PathVariable int posId){
+        shoppingListService.invertPosition(posId);
+        return ResponseEntity.ok("Inverted position");
+    }
+
 }
