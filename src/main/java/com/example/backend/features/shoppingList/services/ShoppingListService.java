@@ -30,6 +30,7 @@ public class ShoppingListService {
 
         List<ShoppingListDto> shoppingListDtoList = new ArrayList<>();
         for (ShoppingList shoppingList : shoppingLists) {
+            sortPositions(shoppingList);
             shoppingListDtoList.add(new ShoppingListDto(shoppingList));
         }
         return shoppingListDtoList;
@@ -38,7 +39,6 @@ public class ShoppingListService {
     public ShoppingListDto findById(int id) {
         ShoppingList shoppingList = shoppingListRepository.findById(id).orElseThrow(() -> new RuntimeException("ShoppingList not found"));
         sortPositions(shoppingList);
-        shoppingListRepository.save(shoppingList);
         return new ShoppingListDto(shoppingList);
     }
 
@@ -68,7 +68,6 @@ public class ShoppingListService {
 
         for (AddPositionDto positionDto : positionsDto) {
             Position position = new Position(positionDto, shoppingList);
-            shoppingList.getPositions().add(position);
             positionRepository.save(position);
         }
         shoppingListRepository.save(shoppingList);
