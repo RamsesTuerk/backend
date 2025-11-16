@@ -19,7 +19,7 @@ public class ShoppingList {
     @Column(nullable = false)
     private Integer id;
     private String name;
-    private int color;
+    private String color;
     private boolean active;
 
     @OneToMany
