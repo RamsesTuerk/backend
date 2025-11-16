@@ -10,6 +10,7 @@ import com.example.backend.features.shoppingList.repositorys.ShoppingListReposit
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,8 +24,14 @@ public class ShoppingListService {
         this.positionRepository = positionRepository;
     }
 
-    public List<ShoppingList> findAll() {
-        return shoppingListRepository.findAll();
+    public List<ShoppingListDto> findAll() {
+        List<ShoppingList> shoppingLists = shoppingListRepository.findAll();
+
+        List<ShoppingListDto> shoppingListDtoList = new ArrayList<>();
+        for (ShoppingList shoppingList : shoppingLists) {
+            shoppingListDtoList.add(new ShoppingListDto(shoppingList));
+        }
+        return shoppingListDtoList;
     }
 
     public ShoppingListDto findById(int id) {
