@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -40,6 +41,18 @@ public class ShoppingListService {
         return new ShoppingListDto(shoppingList);
     }
 
+    public void sortPositions(ShoppingList shoppingList) {
+        List<Position> positions = shoppingList.getPositions();
+        Comparator<Position> customComparator = Comparator
+                .comparing(
+                        Position::isSold,
+                        Comparator.naturalOrder()
+                )
+                .thenComparing(Position::getName, String.CASE_INSENSITIVE_ORDER);
+
+        positions.sort(customComparator);
+    }
+
 
     public void create(CreateShoppingListDto shoppingListDto) {
         ShoppingList shoppingList = new ShoppingList();
@@ -63,6 +76,7 @@ public class ShoppingListService {
     public void invertPosition(int positionId) {
         Position position = positionRepository.findById(positionId).orElseThrow(() -> new RuntimeException("Position not found"));
         position.setSold(!position.isSold());
+        sortPositions(position.getShoppingList());
         positionRepository.save(position);
     }
 }
