@@ -20,6 +20,7 @@ public class Position {
     private boolean sold;
 
     @ManyToOne
+    @JoinColumn(name = "shopping_list_id")
     private ShoppingList shoppingList;
 
     public Position(AddPositionDto addPositionDto, ShoppingList shoppingList) {

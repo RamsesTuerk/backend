@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -30,7 +29,6 @@ public class ShoppingListService {
 
         List<ShoppingListDto> shoppingListDtoList = new ArrayList<>();
         for (ShoppingList shoppingList : shoppingLists) {
-            sortPositions(shoppingList);
             shoppingListDtoList.add(new ShoppingListDto(shoppingList));
         }
         return shoppingListDtoList;
@@ -38,22 +36,8 @@ public class ShoppingListService {
 
     public ShoppingListDto findById(int id) {
         ShoppingList shoppingList = shoppingListRepository.findById(id).orElseThrow(() -> new RuntimeException("ShoppingList not found"));
-        sortPositions(shoppingList);
         return new ShoppingListDto(shoppingList);
     }
-
-    public void sortPositions(ShoppingList shoppingList) {
-        List<Position> positions = shoppingList.getPositions();
-        Comparator<Position> customComparator = Comparator
-                .comparing(
-                        Position::isSold,
-                        Comparator.naturalOrder()
-                )
-                .thenComparing(Position::getName, String.CASE_INSENSITIVE_ORDER);
-
-        positions.sort(customComparator);
-    }
-
 
     public void create(CreateShoppingListDto shoppingListDto) {
         ShoppingList shoppingList = new ShoppingList();
@@ -64,11 +48,15 @@ public class ShoppingListService {
     }
 
     public void addPositions(List<AddPositionDto> positionsDto, int shoppingListId) {
-        ShoppingList shoppingList = shoppingListRepository.findById(shoppingListId).orElseThrow(() -> new RuntimeException("ShoppingList not found"));
+        ShoppingList shoppingList = shoppingListRepository.findById(shoppingListId)
+                .orElseThrow(() -> new RuntimeException("ShoppingList not found"));
 
         for (AddPositionDto positionDto : positionsDto) {
             Position position = new Position(positionDto, shoppingList);
+
             positionRepository.save(position);
+
+            shoppingList.getPositions().add(position);
         }
         shoppingListRepository.save(shoppingList);
     }
@@ -76,7 +64,6 @@ public class ShoppingListService {
     public void invertPosition(int positionId) {
         Position position = positionRepository.findById(positionId).orElseThrow(() -> new RuntimeException("Position not found"));
         position.setSold(!position.isSold());
-        sortPositions(position.getShoppingList());
         positionRepository.save(position);
     }
 

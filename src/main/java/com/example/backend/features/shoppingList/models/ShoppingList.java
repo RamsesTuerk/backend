@@ -6,7 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,6 +23,8 @@ public class ShoppingList {
     private String color;
     private boolean active;
 
-    @OneToMany
-    private List<Position> positions;
+    @OneToMany(mappedBy = "shoppingList", cascade = CascadeType.ALL)
+    @OrderBy("sold ASC, name ASC")
+    private Set<Position> positions = new HashSet<>();
+    ;
 }
