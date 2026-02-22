@@ -40,6 +40,12 @@ public class ShoppingListController {
         return ResponseEntity.ok(shoppingListService.findById(id));
     }
 
+    @PostMapping("/updatePosition/{posId}")
+    public ResponseEntity<?> updatePosition(@PathVariable int posId, @RequestBody String name){
+        shoppingListService.updatePosition(posId, name);
+        return ResponseEntity.ok("Position updated");
+    }
+
     @GetMapping("/invertPosition/{posId}")
     public ResponseEntity<?> getPositions(@PathVariable int posId){
         shoppingListService.invertPosition(posId);

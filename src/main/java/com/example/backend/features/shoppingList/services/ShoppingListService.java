@@ -79,4 +79,10 @@ public class ShoppingListService {
         sortPositions(position.getShoppingList());
         positionRepository.save(position);
     }
+
+    public void updatePosition(int positionId, String name) {
+        Position position = positionRepository.findById(positionId).orElseThrow(() -> new RuntimeException("Position not found"));
+        position.setName(name);
+        positionRepository.save(position);
+    }
 }
