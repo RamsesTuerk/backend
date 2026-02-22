@@ -58,7 +58,7 @@ public class ShoppingListController {
         return ResponseEntity.ok("List updated");
     }
 
-    @GetMapping("/deleteList/{listId}")
+    @DeleteMapping ("/deleteList/{listId}")
     public ResponseEntity<?> deleteList(@PathVariable int listId){
         shoppingListService.delete(listId);
         return ResponseEntity.ok("List deleted");
