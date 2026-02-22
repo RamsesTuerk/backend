@@ -23,8 +23,7 @@ public class ShoppingList {
     private String color;
     private boolean active;
 
-    @OneToMany(mappedBy = "shoppingList", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "shoppingList", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("sold ASC, name ASC")
     private Set<Position> positions = new HashSet<>();
-    ;
 }
