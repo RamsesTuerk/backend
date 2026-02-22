@@ -41,8 +41,8 @@ public class ShoppingListController {
     }
 
     @PostMapping("/updatePosition/{posId}")
-    public ResponseEntity<?> updatePosition(@PathVariable int posId, @RequestBody String name){
-        shoppingListService.updatePosition(posId, name);
+    public ResponseEntity<?> updatePosition(@PathVariable int posId, @RequestBody AddPositionDto positionDto){
+        shoppingListService.updatePosition(posId, positionDto.getName());
         return ResponseEntity.ok("Position updated");
     }
 
