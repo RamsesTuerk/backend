@@ -52,4 +52,10 @@ public class ShoppingListController {
         return ResponseEntity.ok("Inverted position");
     }
 
+    @PostMapping("/updateList/{listId}")
+    public ResponseEntity<?> updateList(@PathVariable int listId, @RequestBody CreateShoppingListDto createShoppingListDto){
+        shoppingListService.updateShoppingList(listId, createShoppingListDto);
+        return ResponseEntity.ok("List updated");
+    }
+
 }

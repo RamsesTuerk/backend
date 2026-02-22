@@ -85,4 +85,11 @@ public class ShoppingListService {
         position.setName(name);
         positionRepository.save(position);
     }
+
+    public void updateShoppingList(int shoppingListId, CreateShoppingListDto createShoppingListDto) {
+        ShoppingList shoppingList = shoppingListRepository.findById(shoppingListId).orElseThrow(() -> new RuntimeException("ShoppingList not found"));
+        shoppingList.setName(createShoppingListDto.getName());
+        shoppingList.setColor(createShoppingListDto.getColor());
+        shoppingListRepository.save(shoppingList);
+    }
 }
