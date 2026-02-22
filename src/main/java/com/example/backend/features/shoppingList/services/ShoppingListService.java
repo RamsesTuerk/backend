@@ -47,6 +47,10 @@ public class ShoppingListService {
         shoppingListRepository.save(shoppingList);
     }
 
+    public void delete(int shoppingListId) {
+        shoppingListRepository.deleteById(shoppingListId);
+    }
+
     public void addPositions(List<AddPositionDto> positionsDto, int shoppingListId) {
         ShoppingList shoppingList = shoppingListRepository.findById(shoppingListId)
                 .orElseThrow(() -> new RuntimeException("ShoppingList not found"));

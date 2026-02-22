@@ -40,22 +40,28 @@ public class ShoppingListController {
         return ResponseEntity.ok(shoppingListService.findById(id));
     }
 
-    @PostMapping("/updatePosition/{posId}")
+    @PatchMapping("/updatePosition/{posId}")
     public ResponseEntity<?> updatePosition(@PathVariable int posId, @RequestBody AddPositionDto positionDto){
         shoppingListService.updatePosition(posId, positionDto.getName());
         return ResponseEntity.ok("Position updated");
     }
 
-    @GetMapping("/invertPosition/{posId}")
+    @PatchMapping("/invertPosition/{posId}")
     public ResponseEntity<?> getPositions(@PathVariable int posId){
         shoppingListService.invertPosition(posId);
         return ResponseEntity.ok("Inverted position");
     }
 
-    @PostMapping("/updateList/{listId}")
+    @PatchMapping("/updateList/{listId}")
     public ResponseEntity<?> updateList(@PathVariable int listId, @RequestBody CreateShoppingListDto createShoppingListDto){
         shoppingListService.updateShoppingList(listId, createShoppingListDto);
         return ResponseEntity.ok("List updated");
+    }
+
+    @GetMapping("/deleteList/{listId}")
+    public ResponseEntity<?> deleteList(@PathVariable int listId){
+        shoppingListService.delete(listId);
+        return ResponseEntity.ok("List deleted");
     }
 
 }
