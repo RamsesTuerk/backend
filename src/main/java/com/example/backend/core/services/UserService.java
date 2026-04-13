@@ -64,7 +64,7 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User mit Email " + email + " nicht gefunden"));
     }
 
-    public List<User> getUserByName(String name){
+    public List<User> getUserByName(String name) {
         return userRepository.findByName(name).orElse(List.of());
     }
 
@@ -77,5 +77,18 @@ public class UserService {
         if (!user.isEmailIsVerified()) {
             throw new RuntimeException("Email is not verified");
         }
+    }
+
+    public void addFCMToken(User user, String token) {
+        System.out.println("addFCMToken");
+        System.out.println("token: " + token);
+        user.setFcm(token);
+        userRepository.save(user);
+    }
+
+    public List<String> getFCMTokens() {
+        List<String> tokens = new ArrayList<>();
+        userRepository.findAll().forEach(user -> tokens.add(user.getFcm()));
+        return tokens;
     }
 }

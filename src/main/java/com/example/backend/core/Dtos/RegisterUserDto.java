@@ -10,7 +10,7 @@ public class RegisterUserDto extends LoginUserDto {
     private String name;
 
     public RegisterUserDto(String email, String password, String name) {
-        super(email, password);
+        super(email, password, "-");
         this.name = name;
     }
 }

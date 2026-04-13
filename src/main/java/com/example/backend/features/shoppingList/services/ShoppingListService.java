@@ -1,5 +1,6 @@
 package com.example.backend.features.shoppingList.services;
 
+import com.example.backend.core.services.FcmService;
 import com.example.backend.features.shoppingList.dtos.AddPositionDto;
 import com.example.backend.features.shoppingList.dtos.CreateShoppingListDto;
 import com.example.backend.features.shoppingList.dtos.ShoppingListDto;
@@ -16,10 +17,13 @@ import java.util.List;
 @Service
 @Transactional
 public class ShoppingListService {
+
+    final private FcmService fcmService;
     final private ShoppingListRepository shoppingListRepository;
     final private PositionRepository positionRepository;
 
-    public ShoppingListService(ShoppingListRepository shoppingListRepository, PositionRepository positionRepository) {
+    public ShoppingListService(FcmService fcmService, ShoppingListRepository shoppingListRepository, PositionRepository positionRepository) {
+        this.fcmService = fcmService;
         this.shoppingListRepository = shoppingListRepository;
         this.positionRepository = positionRepository;
     }
@@ -45,6 +49,8 @@ public class ShoppingListService {
         shoppingList.setColor(shoppingListDto.getColor());
         shoppingList.setActive(true);
         shoppingListRepository.save(shoppingList);
+
+        fcmService.sendToAll(shoppingList.getName() + " wurde Erstellt", "Es wurde eine neue Liste erstellt");
     }
 
     public void delete(int shoppingListId) {

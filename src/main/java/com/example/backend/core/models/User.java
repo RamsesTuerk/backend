@@ -35,6 +35,8 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    private String fcm;
+
     private boolean emailIsVerified;
 
     @CreationTimestamp

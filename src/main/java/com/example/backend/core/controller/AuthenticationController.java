@@ -42,6 +42,8 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<?> authenticate(@RequestBody LoginUserDto loginUserDto) {
         User user = authenticationService.authenticate(loginUserDto);
+        System.out.println("loginUserDto: " + loginUserDto.getFcm());
+        userService.addFCMToken(user, loginUserDto.getFcm());
         return ResponseEntity.ok(new LoginTokenDto(jwtService.generateToken(user), jwtService.getExpirationTime()));
     }
 
